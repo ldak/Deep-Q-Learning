@@ -1,7 +1,7 @@
 package deep_qlearning;
 
-import connect4.Board;
 import neural_network.NeuralNetwork;
+import utils.board.Board;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,11 +12,11 @@ public class DeepQLearning implements Serializable {
     private NeuralNetwork targetNeuralNetwork;
     private NeuralNetwork predictionNeuralNetwork;
 
-    private float persentsRandom=50;
+    private float percentsRandom =50;
     private final Random rnd=new Random();
 
     private int brIterations=0;
-    private int transferIterations=1000;
+    private final int transferIterations=1000;
     private long updates=0;
 
     private int lastMove=0;
@@ -26,7 +26,7 @@ public class DeepQLearning implements Serializable {
     private boolean trained=true;
 
     public DeepQLearning(){
-        targetNeuralNetwork =new NeuralNetwork(84,23,7,5);
+        targetNeuralNetwork =new NeuralNetwork(84,24,7,5);
         predictionNeuralNetwork =new NeuralNetwork(targetNeuralNetwork);
     }
 
@@ -39,20 +39,20 @@ public class DeepQLearning implements Serializable {
     public void log(){
         System.out.println("Deep Q-Learning:");
         System.out.println("Updates: "+updates);
-        System.out.println("PercentRandom: "+persentsRandom);
+        System.out.println("PercentRandom: "+ percentsRandom);
     }
     public void transfer(){
         targetNeuralNetwork=new NeuralNetwork(predictionNeuralNetwork);
     }
 
     public void reducePercentsRandom(float a){
-        if(persentsRandom-a>=1) {
-            persentsRandom -= a;
+        if(percentsRandom -a>=1) {
+            percentsRandom -= a;
         }
     }
 
-    public void setPercentsRandom(float persentsRandom) {
-        this.persentsRandom = persentsRandom;
+    public void setPercentsRandom(float percentsRandom) {
+        this.percentsRandom = percentsRandom;
     }
 
     public int chooseMove(Board board) throws Exception {
@@ -60,9 +60,8 @@ public class DeepQLearning implements Serializable {
         List<Double> output=predictionNeuralNetwork.forwardProp(board.toArray());
         List<Integer> moves=board.getPossibleMoves();
         int random=rnd.nextInt(100);
-        if (random<persentsRandom){
+        if (random< percentsRandom){
             lastMove=moves.get(rnd.nextInt(moves.size()));
-            return lastMove;
         }else {
 
             double max=output.get(moves.get(0));
@@ -70,16 +69,15 @@ public class DeepQLearning implements Serializable {
             if(max!=max){
                 throw new Exception("Neural network return NAN");
             }
-            for (Integer move:
-                 moves) {
+            for (Integer move: moves) {
                 if (max<output.get(move)){
                     i=move;
                     max=output.get(move);
                 }
             }
             lastMove=i;
-            return lastMove;
         }
+        return lastMove;
     }
 
     public void setError(Board newBoard) throws Exception {
@@ -121,5 +119,9 @@ public class DeepQLearning implements Serializable {
 
     public void setLearning(boolean learning) {
         this.learning = learning;
+    }
+
+    public void setLearningRate(float a) {
+        predictionNeuralNetwork.setLearningRate(a);
     }
 }
