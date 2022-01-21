@@ -38,11 +38,15 @@ public class DeepQBot implements Bot, Serializable {
         deepQLearning.setReward(0.5);
     }
 
-    public void setPercentsRandom(int a){
+    public void setPercentsRandom(float a){
         deepQLearning.setPercentsRandom(a);
     }
 
     public void setLearningRate(float a) {
         deepQLearning.setLearningRate(a);
+    }
+
+    public float getPercentsRandom() {
+       return deepQLearning.getPercentsRandom();
     }
 }

@@ -9,6 +9,7 @@ public class Layer implements Serializable {
     private Matrix biases;
     private float learningRate=0.1f;
 
+
     public Layer(int prevLayerSize,int thisLayerSize){
         values =new Matrix(thisLayerSize,1);
         weights=new Matrix(thisLayerSize,prevLayerSize);

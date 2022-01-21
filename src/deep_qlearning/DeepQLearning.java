@@ -26,7 +26,7 @@ public class DeepQLearning implements Serializable {
     private boolean trained=true;
 
     public DeepQLearning(){
-        targetNeuralNetwork =new NeuralNetwork(84,24,7,5);
+        targetNeuralNetwork =new NeuralNetwork(84,60,7,3);
         predictionNeuralNetwork =new NeuralNetwork(targetNeuralNetwork);
     }
 
@@ -100,7 +100,7 @@ public class DeepQLearning implements Serializable {
         if (brIterations>=transferIterations){
             transfer();
             updates++;
-            reducePercentsRandom(0.01f);
+            reducePercentsRandom(0.0001f);
             brIterations=0;
         }
     }
@@ -123,5 +123,9 @@ public class DeepQLearning implements Serializable {
 
     public void setLearningRate(float a) {
         predictionNeuralNetwork.setLearningRate(a);
+    }
+
+    public float getPercentsRandom() {
+        return percentsRandom;
     }
 }

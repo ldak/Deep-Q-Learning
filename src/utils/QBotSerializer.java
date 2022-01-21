@@ -60,6 +60,7 @@ public class QBotSerializer {
         ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(saveFile));
         out.writeObject(qBot);
         out.close();
+        System.out.println(saveFile.getName()+" saved");
     }
 
     public void setFirstBot(DeepQBot firstBot) {

@@ -2,6 +2,7 @@ package utils.board;
 
 import utils.Move;
 
+import javax.swing.*;
 import java.util.List;
 
 public interface Board {
@@ -18,4 +19,6 @@ public interface Board {
     void reset();
 
     boolean isTie();
+
+    void loadButtons(JButton[][] buttons);
 }
