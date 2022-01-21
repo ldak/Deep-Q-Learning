@@ -1,9 +1,0 @@
-E#!/usr/bin/bash
-
-episodes = 1
-commitMessege = "played " + $episodes + " episodes"
-
-java -jar ./DeepQLearning.jar -e $episodes
-
-git commit -a -m $commitMessege
-git push origin training
